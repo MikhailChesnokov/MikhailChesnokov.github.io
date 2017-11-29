@@ -23,6 +23,7 @@ function fillTable() {
 		for (var criterium in factors[factor]) {
 			if (subclasses[criterium].indexOf(parseInt(programClass, 10)) !== -1) {
 				for (var metrics in factors[factor][criterium]) {
+				    //console.log(metrics + " " + phases[metrics])
 					if (phases[metrics].indexOf(programStage) !== -1) {
 						for (var codeIndex in factors[factor][criterium][metrics]) {
 							var elementCode = factors[factor][criterium][metrics][codeIndex];
