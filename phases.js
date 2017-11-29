@@ -9,7 +9,7 @@ var phases = {
 	"Межмодульные связи": ["design"],
 	"Простота кодирования": ["design", "implementation", "testing", "release"],
 	"Зкспертиза принятой системы идентификации": ["implementation", "testing", "release", "support"],
-	"Комментарии логики программ проекта": ["implementation", "testing", "release", "support"],,
+	"Комментарии логики программ проекта": ["implementation", "testing", "release", "support"],
 	"Оформление текста программы": ["implementation", "testing", "release", "support"],
 	"Использование основных логических структур": ["implementation", "testing", "release", "support"],
 	"Соблюдение принципа нисходящего программирования": ["implementation", "testing", "release", "support"],
@@ -56,5 +56,5 @@ var phases = {
 	"Соответствие ПС документации": ["implementation", "testing", "release", "support"],
 	"Полнота тестирования проекта": ["analysis", "implementation", "testing", "release"],
 	"Реализация всех решений": ["analysis", "design", "implementation", "testing", "release", "support"],
-	"Отсутствие явных ошибок и достаточность реквизитов": ["implementation", "testing", "release", "support"],
+	"Отсутствие явных ошибок и достаточность реквизитов": ["implementation", "testing", "release", "support"]
 };
