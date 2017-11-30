@@ -34,6 +34,9 @@ function fillTable() {
 							var elementCode = factors[factor][criterium][metrics][codeIndex];
 							var elementName = elements[elementCode];
 							$('#inputTableBody').append(constructTableRow(elementCode, elementName));
+							if (countable.indexOf(elementCode) !== -1) {
+                                $("." + elementCode).css('display','table-row');
+                            }
 						}
 					}
 				}
