@@ -5,7 +5,8 @@ $('#continueStartPage').click(function(evt) {
 	//evt.preventDefault();
 	programClass = $('#classSelector').val();
 	programStage = $('#stageSelector').val();
-	
+
+    $('#mainHeader').css('display', 'none');
 	$('#startPage').remove();
 	$('#inputTablePage').css('display', 'block');
 	fillTable();
@@ -23,7 +24,6 @@ function fillTable() {
 		for (var criterium in factors[factor]) {
 			if (subclasses[criterium].indexOf(parseInt(programClass, 10)) !== -1) {
 				for (var metrics in factors[factor][criterium]) {
-				    //console.log(metrics + " " + phases[metrics])
 					if (phases[metrics].indexOf(programStage) !== -1) {
 						for (var codeIndex in factors[factor][criterium][metrics]) {
 							var elementCode = factors[factor][criterium][metrics][codeIndex];
@@ -50,34 +50,45 @@ function constructTableRow(elementCode, elementName) {
 function fillMarks() {
     for (var factor in factors) {
         var criteriaSum = 0, criteriaAmount = 0;
-        $('#factorListItem').append("<li>" + factor + ": <strong id=" + "value_" + factor.replace(/ /g,'_') + "></strong>" + "<ol id=" + factor.replace(/ /g,'_') + ">");
+        $('#factorListItem').append("<li>" + factor + ": " + formValueTag(factor) + formListTag(factor));
         for (var criterium in factors[factor]) {
             if (subclasses[criterium].indexOf(parseInt(programClass, 10)) !== -1) {
                 var metricsSum = 0, metricsAmount = 0;
-                $("#" + factor.replace(/ /g,'_')).append("<li>" + criterium + ": <strong id=" + "value_" + criterium.replace(/ /g,'_') + "></strong>" + "<ol id=" + criterium.replace(/ /g,'_') + ">");
+                $(createSelector(factor)).append("<li>" + criterium + ": " + formValueTag(criterium) + formListTag(criterium));
                 for (var metrics in factors[factor][criterium]) {
                     if (phases[metrics].indexOf(programStage) !== -1) {
                         var elementsSum = 0, elementsAmount = 0;
                         for (var codeIndex in factors[factor][criterium][metrics]) {
                             var elementCode = factors[factor][criterium][metrics][codeIndex];
-                            elementsSum += parseFloat($('#' + elementCode).val());
+                            elementsSum += parseFloat($("#" + elementCode).val());
                             elementsAmount ++;
                         }
-                        var totalMetric = parseFloat(elementsSum) / parseFloat(elementsAmount);
+                        var totalMetric = parseFloat(elementsAmount) === 0 ? 0 : parseFloat(elementsSum) / parseFloat(elementsAmount);
                         metricsSum += totalMetric;
                         metricsAmount ++;
-                        $("#" + criterium.replace(/ /g,'_')).append("<li>" + metrics + ": <strong>" + totalMetric + "</strong></li>")
+                        $(createSelector(criterium)).append("<li>" + metrics + ": <strong>" + totalMetric + "</strong></li>")
                     }
                 }
-                $("#" + factor.replace(/ /g,'_')).append("</ol></li>");
-                var totalCriteria = metricsSum / metricsAmount;
+                $(createSelector(factor)).append("</ol></li>");
+                var totalCriteria = metricsAmount === 0 ? 0 : metricsSum / metricsAmount;
                 criteriaSum += totalCriteria;
                 criteriaAmount ++;
                 $("#value_" + criterium.replace(/ /g,'_')).text(totalCriteria);
             }
         }
         $('#factorListItem').append("</ol></li>");
-        var totalFactor = criteriaSum / criteriaAmount;
-        $("#value_" + factor.replace(/ /g,'_')).text(totalCriteria);
+        var totalFactor = criteriaAmount === 0 ? 0 : criteriaSum / criteriaAmount;
+        $("#value_" + factor.replace(/ /g,'_')).text(totalFactor);
     }
+}
+
+function createSelector(valueName) {
+    return ("#" + valueName.replace(/ /g,'_'));
+}
+
+function formValueTag(valueName) {
+    return ("<strong id=" + "value_" + valueName.replace(/ /g,'_') + "></strong>");
+}
+function formListTag(valueName) {
+    return ("<ol id=" + valueName.replace(/ /g,'_') + ">");
 }
